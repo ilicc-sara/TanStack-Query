@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
+  const [joke, setJoke] = useState(null);
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -13,6 +14,7 @@ function App() {
 
         const data = await response.json();
         console.log(data);
+        setJoke(data.joke);
       } catch (error) {
         console.log("Fetch error:", error);
       }
@@ -23,7 +25,8 @@ function App() {
 
   return (
     <>
-      <h1>API</h1>
+      <h1>DAD JOKES</h1>
+      {joke && <h3>{joke}</h3>}
     </>
   );
 }
