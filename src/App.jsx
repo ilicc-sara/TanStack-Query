@@ -71,7 +71,7 @@ function Example() {
     <QueryClientProvider client={queryClient}>
       <>
         <h1>DAD JOKES</h1>
-        {joke && <h3>{joke}</h3>}
+        {data && <h3>{data.joke}</h3>}
       </>
     </QueryClientProvider>
   );
