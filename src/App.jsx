@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import Demo from "./Demo";
+
 import {
   QueryClient,
   QueryClientProvider,
@@ -8,16 +8,6 @@ import {
 } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
-
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Demo />
-    </QueryClientProvider>
-  );
-}
-
-export default App;
 
 // function App() {
 //   const [joke, setJoke] = useState(null);
@@ -54,37 +44,37 @@ export default App;
 // export default App;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// export default function App() {
-//   return (
-//     <QueryClientProvider client={queryClient}>
-//       <Example />
-//     </QueryClientProvider>
-//   );
-// }
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Example />
+    </QueryClientProvider>
+  );
+}
 
-// function Example() {
-//   const [joke, setJoke] = useState(null);
-//   const { isPending, error, data } = useQuery({
-//     queryKey: ["repoData"],
-//     queryFn: () =>
-//       fetch("https://icanhazdadjoke.com/", {
-//         headers: {
-//           Accept: "application/json",
-//         },
-//       }).then((res) => res.json()),
-//   });
-//   console.log(data);
+function Example() {
+  const [joke, setJoke] = useState(null);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      fetch("https://icanhazdadjoke.com/", {
+        headers: {
+          Accept: "application/json",
+        },
+      }).then((res) => res.json()),
+  });
+  console.log(data);
 
-//   if (isPending) return "Loading...";
+  if (isPending) return <h1>Loading...</h1>;
 
-//   if (error) return "An error has occurred: " + error.message;
+  if (error) return "An error has occurred: " + error.message;
 
-//   return (
-//     <QueryClientProvider client={queryClient}>
-//       <>
-//         <h1>DAD JOKES</h1>
-//         {data && <h3>{data.joke}</h3>}
-//       </>
-//     </QueryClientProvider>
-//   );
-// }
+  return (
+    <QueryClientProvider client={queryClient}>
+      <>
+        <h1>DAD JOKES</h1>
+        {data && <h3>{data.joke}</h3>}
+      </>
+    </QueryClientProvider>
+  );
+}
