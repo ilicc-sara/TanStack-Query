@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
+import { fetchTodos } from "./api";
 
 function Demo() {
   const { data: todos, isLoading } = useQuery({
