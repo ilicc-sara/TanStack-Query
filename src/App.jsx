@@ -8,19 +8,27 @@ import {
 } from "@tanstack/react-query";
 
 function App() {
-  const { data } = useQuery({
+  const { data, isPending, isLoading, isFetching, refetch, error } = useQuery({
     queryKey: ["todos"],
     queryFn: getTodos,
   });
+  console.log(data?.slice(0, 10));
+
+  if (error) {
+    alert("Something went wrong");
+  }
 
   return (
     <>
-      <h1>{JSON.stringify(data)}</h1>
+      <h1>{isPending ? "Loading..." : JSON.stringify(data?.slice(0, 10))}</h1>
+      <br />
+      <button onClick={() => refetch()}>Refetch</button>
     </>
   );
 }
 
 const getTodos = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const response = await fetch("https://jsonplaceholder.typicode.com/todos");
   return await response.json();
 };
