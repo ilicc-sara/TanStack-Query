@@ -24,7 +24,13 @@ function App() {
 
   return (
     <>
-      <h1>{isPending ? "Loading..." : JSON.stringify(data?.slice(0, 10))}</h1>
+      <div>
+        {isPending ? (
+          <span class="loader"></span>
+        ) : (
+          JSON.stringify(data?.slice(0, 10))
+        )}
+      </div>
       <br />
       {/* <button onClick={() => refetch()}>Refetch</button> */}
       <button onClick={() => setId((prev) => prev + 1)}>Increment ID</button>
