@@ -7,7 +7,27 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 
-const queryClient = new QueryClient();
+function App() {
+  const { data } = useQuery({
+    queryKey: ["todos"],
+    queryFn: getTodos,
+  });
+
+  return (
+    <>
+      <h1>{JSON.stringify(data)}</h1>
+    </>
+  );
+}
+
+const getTodos = async () => {
+  const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+  return await response.json();
+};
+
+export default App;
+
+// const queryClient = new QueryClient();
 
 // function App() {
 //   const [joke, setJoke] = useState(null);
@@ -44,37 +64,40 @@ const queryClient = new QueryClient();
 // export default App;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-export default function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Example />
-    </QueryClientProvider>
-  );
-}
+// export default function App() {
+//   return (
+//     <QueryClientProvider client={queryClient}>
+//       <Example />
+//     </QueryClientProvider>
+//   );
+// }
 
-function Example() {
-  const [joke, setJoke] = useState(null);
-  const { isPending, error, data } = useQuery({
-    queryKey: ["repoData"],
-    queryFn: () =>
-      fetch("https://icanhazdadjoke.com/", {
-        headers: {
-          Accept: "application/json",
-        },
-      }).then((res) => res.json()),
-  });
-  console.log(data);
+// function Example() {
+//   const [joke, setJoke] = useState(null);
+//   const { isPending, error, data } = useQuery({
+//     queryKey: ["repoData"],
+//     queryFn: () =>
+//       fetch("https://icanhazdadjoke.com/", {
+//         headers: {
+//           Accept: "application/json",
+//         },
+//       }).then((res) => res.json()),
+//   });
+//   console.log(data);
 
-  if (isPending) return <h1>Loading...</h1>;
+//   if (isPending) return <h1>Loading...</h1>;
 
-  if (error) return "An error has occurred: " + error.message;
+//   if (error) return "An error has occurred: " + error.message;
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <>
-        <h1>DAD JOKES</h1>
-        {data && <h3>{data.joke}</h3>}
-      </>
-    </QueryClientProvider>
-  );
-}
+//   return (
+//     <QueryClientProvider client={queryClient}>
+//       <>
+//         <h1>DAD JOKES</h1>
+//         <br />
+//         <br />
+//         <br />
+//         {data && <h3>{data.joke}</h3>}
+//       </>
+//     </QueryClientProvider>
+//   );
+// }
