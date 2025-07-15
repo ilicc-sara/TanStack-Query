@@ -8,9 +8,10 @@ import {
 } from "@tanstack/react-query";
 
 function App() {
+  const [id, setId] = useState(1);
   const { data, isPending, isLoading, isFetching, refetch, error } = useQuery({
-    queryKey: ["todos"],
-    queryFn: getTodos,
+    queryKey: ["todos", id],
+    queryFn: () => getTodos(id),
   });
   console.log(data?.slice(0, 10));
 
@@ -22,14 +23,17 @@ function App() {
     <>
       <h1>{isPending ? "Loading..." : JSON.stringify(data?.slice(0, 10))}</h1>
       <br />
-      <button onClick={() => refetch()}>Refetch</button>
+      {/* <button onClick={() => refetch()}>Refetch</button> */}
+      <button onClick={() => setId((prev) => prev + 1)}>Increment ID</button>
     </>
   );
 }
 
-const getTodos = async () => {
+const getTodos = async (id) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/comments?postId=${id}`
+  );
   return await response.json();
 };
 
