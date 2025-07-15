@@ -9,9 +9,12 @@ import {
 
 function App() {
   const [id, setId] = useState(1);
+  const [on, setOn] = useState(true);
   const { data, isPending, isLoading, isFetching, refetch, error } = useQuery({
     queryKey: ["todos", id],
+    // queryKey: ["todos"],
     queryFn: () => getTodos(id),
+    enabled: on,
   });
   console.log(data?.slice(0, 10));
 
