@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { addDays, format } from "date-fns/fp";
+import { formatDistance, subDays, formatDistanceToNow } from "date-fns";
 
 import {
   QueryClient,
@@ -12,11 +14,23 @@ function App() {
   const { data, isPending, isLoading, isFetching, refetch, error } = useQuery(
     CreateTodoQueryOptions()
   );
-  console.log(data?.slice(0, 10));
+  // console.log(data?.slice(0, 10));
 
   if (error) {
     alert("Something went wrong");
   }
+
+  console.log(
+    formatDistance(subDays(new Date(), 3), new Date(), {
+      addSuffix: true,
+    })
+  );
+
+  const myDate = new Date("2021-07-16");
+
+  const timeAgo = formatDistanceToNow(myDate, { addSuffix: true });
+
+  console.log(timeAgo);
 
   return (
     <>
